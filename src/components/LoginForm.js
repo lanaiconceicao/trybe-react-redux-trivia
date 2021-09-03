@@ -9,13 +9,14 @@ export class LoginForm extends Component {
       name: '',
       gravatarEmail: '',
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (e) => {
+  handleChange(e) {
     const { name, value } = e.target;
     this.setState(() => ({
       [name]: value,
-    }))
+    }));
   }
 
   render() {
@@ -29,7 +30,7 @@ export class LoginForm extends Component {
       return regex.test(gravatarEmail);
     };
 
-    const validName = () => name && true;
+    const validName = () => !!name;
 
     return (
       <form className="login-form">
@@ -39,8 +40,8 @@ export class LoginForm extends Component {
             type="text"
             data-testid="input-gravatar-email"
             name="gravatarEmail"
-            onChange={handleChange}
-            value={gravatarEmail}
+            onChange={ handleChange }
+            value={ gravatarEmail }
           />
         </label>
         <label htmlFor="name">
@@ -49,15 +50,15 @@ export class LoginForm extends Component {
             type="text"
             data-testid="input-player-name"
             name="name"
-            onChange={handleChange}
-            value={name}
+            onChange={ handleChange }
+            value={ name }
           />
         </label>
         <Button
           text="Start!"
           dataTestid="btn-play"
-          onClick={handleClick}
-          disabled={!(validEmail() && validName())}
+          onClick={ handleClick }
+          disabled={ !(validEmail() && validName()) }
         />
       </form>
     );
