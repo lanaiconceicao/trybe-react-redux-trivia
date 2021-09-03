@@ -1,6 +1,6 @@
-const LOADING_ACTION = 'LOADING_ACTION';
-const SUCCESS_ACTION = 'SUCCESS_ACTION';
-const FAIL_ACTION = 'FAIL_ACTION';
+export const LOADING_ACTION = 'LOADING_ACTION';
+export const SUCCESS_ACTION = 'SUCCESS_ACTION';
+export const FAIL_ACTION = 'FAIL_ACTION';
 
 export const loadingAction = (payload) => ({
   type: LOADING_ACTION,

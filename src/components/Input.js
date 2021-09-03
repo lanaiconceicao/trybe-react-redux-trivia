@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 
 export class Input extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
   render() {
+    const { header } = this.props;
     return (
       <div>
-        <p>Input</p>
+        <label>
+          {header}
+          <input type="text" data-testid="input-player-name" />
+        </label>
       </div>
     );
   }
