@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+// import React, { Component } from 'react';
+// // import PropTypes from 'prop-types';
 
-export class Input extends Component {
-  render() {
-    return (
-      <div>
-        <p>Input</p>
-      </div>
-    );
-  }
-}
+// export class Input extends Component {
+//   // constructor(props) {
+//   //   super(props);
+//   // }
 
-export default Input;
+//   render() {
+//     const { header } = this.props;
+//     return (
+//       <div>
+//         <label>
+//           {header}
+//           <input type="text" data-testid="input-player-name" />
+//         </label>
+//       </div>
+//     );
+//   }
+// }
+
+// export default Input;

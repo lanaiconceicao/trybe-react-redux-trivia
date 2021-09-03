@@ -1,3 +1,5 @@
+import { LOADING_ACTION, FAIL_ACTION, SUCCESS_ACTION } from '../actions';
+
 const initialState = {
   player: {
     name: '',
@@ -9,7 +11,13 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-  case typeName:
+  case LOADING_ACTION:
+    return { ...state, ...payload };
+
+  case SUCCESS_ACTION:
+    return { ...state, ...payload };
+
+  case FAIL_ACTION:
     return { ...state, ...payload };
 
   default:
