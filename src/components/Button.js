@@ -11,7 +11,7 @@ export class Button extends Component {
     const { text } = this.props;
     return (
       <button
-        type="submit"
+        type="button"
         onClick={ onClick }
         disabled={ disabled }
         data-testid={ dataTestid }
