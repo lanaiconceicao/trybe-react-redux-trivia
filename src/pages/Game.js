@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Header } from '../components';
 // import PropTypes from 'prop-types';
 
 export class Game extends Component {
   render() {
     return (
       <div>
-        <p>Game</p>
+        <Header />
       </div>
     );
   }

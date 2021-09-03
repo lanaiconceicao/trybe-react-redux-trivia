@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class Button extends Component {
   // constructor(props) {
@@ -10,14 +11,16 @@ export class Button extends Component {
     const { onClick, disabled, dataTestid } = this.props;
     const { text } = this.props;
     return (
-      <button
-        type="submit"
-        onClick={ onClick }
-        disabled={ disabled }
-        data-testid={ dataTestid }
-      >
-        {text}
-      </button>
+      <Link to="/game">
+        <button
+          type="button"
+          onClick={ onClick }
+          disabled={ disabled }
+          data-testid={ dataTestid }
+        >
+          {text}
+        </button>
+      </Link>
     );
   }
 }

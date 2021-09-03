@@ -11,7 +11,7 @@ export class Header extends Component {
       <header>
         <img
           src={ `https://www.gravatar.com/avatar/${cryptoEmail}` }
-          alt="Profile"
+          alt="Profile avatar"
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{ name }</p>
@@ -27,7 +27,7 @@ Header.propTypes = {
   gravatarEmail: PropTypes.string,
 }.isRequired;
 
-const mapStateToProps = ({ name, gravatarEmail, score }) => ({
+const mapStateToProps = ({ player: { name, gravatarEmail, score } }) => ({
   name,
   gravatarEmail,
   score,
