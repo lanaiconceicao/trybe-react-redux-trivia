@@ -7,7 +7,7 @@ const initialState = {
     score: 0,
     token: '',
     gravatarEmail: '',
-  }, 
+  },
 };
 
 export default (state = initialState, { type, payload }) => {

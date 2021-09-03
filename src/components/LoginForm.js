@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
 import { fetchToken } from '../redux/actions';
 import { Button } from './Button';
-import PropTypes from 'prop-types';
+import { SettingsButton } from './SettingsButton';
 
 export class LoginForm extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export class LoginForm extends Component {
   handleClick() {
     const { getToken } = this.props;
     getToken();
-    return <Redirect to="/game" />
+    return <Redirect to="/game" />;
   }
 
   render() {
@@ -43,44 +44,47 @@ export class LoginForm extends Component {
     const validName = () => !!name;
 
     return (
-      <form className="login-form">
-        <label htmlFor="gravatarEmail">
-          Gravatar E-mail
-          <input
-            type="text"
-            data-testid="input-gravatar-email"
-            name="gravatarEmail"
-            onChange={ handleChange }
-            value={ gravatarEmail }
+      <>
+        <SettingsButton />
+        <form className="login-form">
+          <label htmlFor="gravatarEmail">
+            Gravatar E-mail
+            <input
+              type="text"
+              data-testid="input-gravatar-email"
+              name="gravatarEmail"
+              onChange={ handleChange }
+              value={ gravatarEmail }
+            />
+          </label>
+          <label htmlFor="name">
+            Player Name
+            <input
+              type="text"
+              data-testid="input-player-name"
+              name="name"
+              onChange={ handleChange }
+              value={ name }
+            />
+          </label>
+          <Button
+            text="Start!"
+            dataTestid="btn-play"
+            onClick={ handleClick }
+            disabled={ !(validEmail() && validName()) }
           />
-        </label>
-        <label htmlFor="name">
-          Player Name
-          <input
-            type="text"
-            data-testid="input-player-name"
-            name="name"
-            onChange={ handleChange }
-            value={ name }
-          />
-        </label>
-        <Button
-          text="Start!"
-          dataTestid="btn-play"
-          onClick={ handleClick }
-          disabled={ !(validEmail() && validName()) }
-        />
-      </form>
+        </form>
+      </>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getToken: () => dispatch(fetchToken()),  
+  getToken: () => dispatch(fetchToken()),
 });
 
 LoginForm.propTypes = {
-  getToken: PropTypes.func.isRequired,  
+  getToken: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

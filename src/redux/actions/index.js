@@ -4,18 +4,18 @@ const URL = 'https://opentdb.com/api_token.php?command=request';
 
 function successAction(json) {
   window.localStorage.setItem('token', json.token);
-  return { type: SUCCESS_ACTION, payload:json.token };
-};
+  return { type: SUCCESS_ACTION, payload: json.token };
+}
 
 export const failAction = (error) => ({
-  type: FAIL_ACTION, 
+  type: FAIL_ACTION,
   payload: error,
 });
 
 export const fetchToken = () => async (dispatch) => {
-  try {    
+  try {
     const response = await fetch(URL);
-    const data = await response.json(); 
+    const data = await response.json();
     return dispatch(successAction(data));
   } catch (error) {
     return dispatch(failAction(error.message));
