@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import { fetchToken } from '../redux/actions';
 import { Button } from './Button';
 import { SettingsButton } from './SettingsButton';
-// import PropTypes from 'prop-types';
 
 export class LoginForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       gravatarEmail: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(e) {
@@ -18,6 +22,12 @@ export class LoginForm extends Component {
     this.setState(() => ({
       [name]: value,
     }));
+  }
+
+  handleClick() {
+    const { getToken } = this.props;
+    getToken();
+    return <Redirect to="/game" />;
   }
 
   render() {
@@ -69,4 +79,12 @@ export class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  getToken: () => dispatch(fetchToken()),
+});
+
+LoginForm.propTypes = {
+  getToken: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(LoginForm);
