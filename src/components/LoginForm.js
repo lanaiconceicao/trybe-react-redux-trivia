@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from './Button';
+import { SettingsButton } from './SettingsButton';
 // import PropTypes from 'prop-types';
 
 export class LoginForm extends Component {
@@ -33,34 +34,37 @@ export class LoginForm extends Component {
     const validName = () => !!name;
 
     return (
-      <form className="login-form">
-        <label htmlFor="gravatarEmail">
-          Gravatar E-mail
-          <input
-            type="text"
-            data-testid="input-gravatar-email"
-            name="gravatarEmail"
-            onChange={ handleChange }
-            value={ gravatarEmail }
+      <>
+        <SettingsButton />
+        <form className="login-form">
+          <label htmlFor="gravatarEmail">
+            Gravatar E-mail
+            <input
+              type="text"
+              data-testid="input-gravatar-email"
+              name="gravatarEmail"
+              onChange={ handleChange }
+              value={ gravatarEmail }
+            />
+          </label>
+          <label htmlFor="name">
+            Player Name
+            <input
+              type="text"
+              data-testid="input-player-name"
+              name="name"
+              onChange={ handleChange }
+              value={ name }
+            />
+          </label>
+          <Button
+            text="Start!"
+            dataTestid="btn-play"
+            onClick={ handleClick }
+            disabled={ !(validEmail() && validName()) }
           />
-        </label>
-        <label htmlFor="name">
-          Player Name
-          <input
-            type="text"
-            data-testid="input-player-name"
-            name="name"
-            onChange={ handleChange }
-            value={ name }
-          />
-        </label>
-        <Button
-          text="Start!"
-          dataTestid="btn-play"
-          onClick={ handleClick }
-          disabled={ !(validEmail() && validName()) }
-        />
-      </form>
+        </form>
+      </>
     );
   }
 }
