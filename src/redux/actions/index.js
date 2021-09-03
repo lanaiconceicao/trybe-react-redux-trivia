@@ -1,5 +1,6 @@
 export const SUCCESS_ACTION = 'SUCCESS_ACTION';
 export const FAIL_ACTION = 'FAIL_ACTION';
+export const GET_DATA = 'GET_DATA';
 const URL = 'https://opentdb.com/api_token.php?command=request';
 
 function successAction(json) {
@@ -21,3 +22,8 @@ export const fetchToken = () => async (dispatch) => {
     return dispatch(failAction(error.message));
   }
 };
+
+export const sendData = (payload) => ({
+  type: GET_DATA,
+  payload,
+});

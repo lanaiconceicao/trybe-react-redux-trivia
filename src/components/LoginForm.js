@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
-import { fetchToken } from '../redux/actions';
+import { fetchToken, sendData } from '../redux/actions';
 import { Button } from './Button';
 import { SettingsButton } from './SettingsButton';
 
@@ -25,9 +24,9 @@ export class LoginForm extends Component {
   }
 
   handleClick() {
-    const { getToken } = this.props;
+    const { getToken, storeData } = this.props;
     getToken();
-    return <Redirect to="/game" />;
+    storeData(this.state);
   }
 
   render() {
@@ -81,10 +80,12 @@ export class LoginForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(fetchToken()),
+  storeData: (state) => dispatch(sendData(state)),
 });
 
 LoginForm.propTypes = {
   getToken: PropTypes.func.isRequired,
+  storeData: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

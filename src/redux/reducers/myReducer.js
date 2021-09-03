@@ -1,13 +1,11 @@
-import { SUCCESS_ACTION, FAIL_ACTION } from '../actions';
+import { SUCCESS_ACTION, FAIL_ACTION, GET_DATA } from '../actions';
 
 const initialState = {
-  player: {
-    name: '',
-    assertions: 0,
-    score: 0,
-    token: '',
-    gravatarEmail: '',
-  },
+  name: '',
+  assertions: 0,
+  score: 0,
+  token: '',
+  gravatarEmail: '',
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -17,6 +15,9 @@ export default (state = initialState, { type, payload }) => {
 
   case FAIL_ACTION:
     return { ...state, error: payload };
+
+  case GET_DATA:
+    return { ...state, name: payload.name, gravatarEmail: payload.gravatarEmail };
 
   default:
     return state;
