@@ -1,4 +1,4 @@
-import { LOADING_ACTION, FAIL_ACTION, SUCCESS_ACTION  } from '../actions';
+import { LOADING_ACTION, FAIL_ACTION, SUCCESS_ACTION } from '../actions';
 
 const initialState = {
   player: {
