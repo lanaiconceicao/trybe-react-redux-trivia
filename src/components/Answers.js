@@ -6,37 +6,51 @@ class Answers extends Component {
   constructor() {
     super();
 
+    // this.state = {
+    //   currentQuestion: 0,
+    // };
+
     this.createQuestion = this.createQuestion.bind(this);
+    this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
+  }
+
+  generateIncorrectAnswers(question) {
+    return question.incorrect_answers.map((incorrectAnswer, id) => {
+      return (
+        <button
+          type="button"
+          key={ id }
+          data-testid="wrong-answer"
+        >
+          { incorrectAnswer }
+        </button>);
+    });
   }
 
   createQuestion() {
+    // const { 0 } = this.state;
     const { questions } = this.props;
+    const question = questions[0];
     console.log(questions);
-    return questions.map((item) => {
-      return (
-        <div key>
-          <p data-testid="question-category">{item.category}</p>
-          <button
-            type="button"
-            data-testid="question-text"
-          >
-            {item.question}
-          </button>
-          <button
-            type="button"
-            data-testid="correct-answer"
-          >
-            {item.question}
-          </button>
-          <button
-            type="button"
-            data-testid="wrong-answer"
-          >
-            {item.question}
-          </button>
-        </div>
-      );
-    });
+    // return questions.map((item) => {
+    return (
+      <div key>
+        <p data-testid="question-category">{question[category]}</p>
+        <p
+          type="button"
+          data-testid="question-text"
+        >
+          {question[question]}
+        </p>
+        <button
+          type="button"
+          data-testid="correct-answer"
+        >
+          {question[correct_answer]}
+        </button>
+        { this.generateIncorrectAnswers(question) }
+      </div>
+    );
   }
 
   render() {
