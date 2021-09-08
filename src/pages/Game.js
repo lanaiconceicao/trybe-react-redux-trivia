@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from '../components';
+import { Answers } from '../components/Answers';
 // import PropTypes from 'prop-types';
 
 export class Game extends Component {
@@ -7,6 +8,7 @@ export class Game extends Component {
     return (
       <div>
         <Header />
+        <Answers />
       </div>
     );
   }
