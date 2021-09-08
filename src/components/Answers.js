@@ -2,20 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-export class Answers extends Component {
-  constructor(props) {
-    super(props);
+class Answers extends Component {
+  constructor() {
+    super();
 
     this.createQuestion = this.createQuestion.bind(this);
   }
 
-  componentDidMount() {
-    this.createQuestion();
-  }
-
   createQuestion() {
     const { questions } = this.props;
-    console.log(questions, 'create question');
+    console.log(questions);
     return questions.map((item) => {
       return (
         <div key>
@@ -55,20 +51,19 @@ export class Answers extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state, 'map state');
-  const { player: { questions } } = state;
-  return {
-    questions,
-  };
-};
-
 Answers.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.object),
 };
 
 Answers.defaultProps = {
-  questions: ['a'],
+  questions: [],
+};
+
+const mapStateToProps = (state) => {
+  const { player: { questions } } = state;
+  return {
+    questions,
+  };
 };
 
 export default connect(mapStateToProps)(Answers);
