@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { updateScore } from '../redux/actions';
 
-class Answers extends Component {
+class Questions extends Component {
   constructor() {
     super();
 
@@ -15,12 +16,16 @@ class Answers extends Component {
     this.createQuestion = this.createQuestion.bind(this);
     this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.correctHandleClick = this.correctHandleClick.bind(this);
     this.setTimer = this.setTimer.bind(this);
   }
 
   componentDidMount() {
     const SECONDS = 1000;
     this.interval = setInterval(this.setTimer, SECONDS);
+
+    const state = { player: { score: 0 } };
+    localStorage.setItem('state', JSON.stringify(state));
   }
 
   setTimer() {
@@ -44,6 +49,41 @@ class Answers extends Component {
     });
   }
 
+  correctHandleClick(e) {
+    const { timer } = this.state;
+    const difficulty = e.target.getAttribute('difficulty');
+    const HARD = 3;
+    const MEDIUM = 2;
+    const EASY = 1;
+    const minScore = 10;
+    let multiplier;
+    let questionScore = 0;
+
+    switch (difficulty) {
+    case 'hard':
+      multiplier = HARD;
+      break;
+    case 'medium':
+      multiplier = MEDIUM;
+      break;
+    case 'easy':
+      multiplier = EASY;
+      break;
+    default:
+      break;
+    }
+
+    questionScore = minScore + (multiplier * timer);
+
+    const { dispatchScore, score: scoreFromState } = this.props;
+
+    dispatchScore(questionScore);
+
+    const state = { player: { score: scoreFromState + questionScore } };
+    localStorage.setItem('state', JSON.stringify(state));
+    this.handleClick();
+  }
+
   generateIncorrectAnswers(question) {
     const { buttonDisabled } = this.state;
     return question.incorrect_answers.map((incorrectAnswer, id) => (
@@ -51,6 +91,7 @@ class Answers extends Component {
         type="button"
         key={ id }
         data-testid="wrong-answer"
+        difficulty={ question.difficulty }
         className={ buttonDisabled && 'red-border' }
         onClick={ this.handleClick }
         disabled={ buttonDisabled }
@@ -72,8 +113,9 @@ class Answers extends Component {
           <button
             type="button"
             data-testid="correct-answer"
+            difficulty={ questionSelected.difficulty }
             className={ buttonDisabled && 'green-border' }
-            onClick={ this.handleClick }
+            onClick={ (e) => this.correctHandleClick(e) }
             disabled={ buttonDisabled }
           >
             {questionSelected.correct_answer}
@@ -103,19 +145,26 @@ class Answers extends Component {
   }
 }
 
-Answers.propTypes = {
+Questions.propTypes = {
+  dispatchScore: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object),
+  score: PropTypes.number.isRequired,
 };
 
-Answers.defaultProps = {
+Questions.defaultProps = {
   questions: [],
 };
 
 const mapStateToProps = (state) => {
-  const { player: { questions } } = state;
+  const { player: { questions, score } } = state;
   return {
     questions,
+    score,
   };
 };
 
-export default connect(mapStateToProps)(Answers);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(updateScore(score)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
