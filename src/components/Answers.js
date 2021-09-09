@@ -15,16 +15,14 @@ class Answers extends Component {
   }
 
   generateIncorrectAnswers(question) {
-    return question.incorrect_answers.map((incorrectAnswer, id) => {
-      return (
-        <button
-          type="button"
-          key={ id }
-          data-testid="wrong-answer"
-        >
-          { incorrectAnswer }
-        </button>);
-    });
+    return question.incorrect_answers.map((incorrectAnswer, id) => (
+      <button
+        type="button"
+        key={ id }
+        data-testid="wrong-answer"
+      >
+        { incorrectAnswer }
+      </button>));
   }
 
   createQuestion() {
