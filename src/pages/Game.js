@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Header } from '../components';
+import Answers from '../components/Answers';
 // import PropTypes from 'prop-types';
 
-export class Game extends Component {
+class Game extends Component {
   render() {
     return (
       <div>
         <Header />
+        <Answers />
       </div>
     );
   }
