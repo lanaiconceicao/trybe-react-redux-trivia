@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from '../components';
-import Answers from '../components/Answers';
+import { Header, Questions } from '../components';
 // import PropTypes from 'prop-types';
 
 class Game extends Component {
@@ -8,7 +7,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <Answers />
+        <Questions />
       </div>
     );
   }
