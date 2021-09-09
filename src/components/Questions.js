@@ -8,12 +8,34 @@ class Answers extends Component {
 
     this.state = {
       currentQuestion: 0,
+      timer: 30,
       buttonDisabled: false,
     };
 
     this.createQuestion = this.createQuestion.bind(this);
     this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.setTimer = this.setTimer.bind(this);
+  }
+
+  componentDidMount() {
+    const SECONDS = 1000;
+    this.interval = setInterval(this.setTimer, SECONDS);
+  }
+
+  setTimer() {
+    const { timer, buttonDisabled } = this.state;
+    if (timer - 1 <= 0) {
+      this.setState({
+        buttonDisabled: true,
+      });
+      clearInterval(this.interval);
+    }
+    if (!buttonDisabled) {
+      this.setState({
+        timer: timer - 1,
+      });
+    }
   }
 
   handleClick() {
@@ -64,6 +86,7 @@ class Answers extends Component {
 
   render() {
     const { questions } = this.props;
+    const { timer } = this.state;
     const question = questions[0];
     if (question !== undefined) {
       console.log(question.category);
@@ -74,7 +97,7 @@ class Answers extends Component {
         <p>
           { createQuestion() }
         </p>
-        {/* <button>Next Question</button> */}
+        <p>{ timer }</p>
       </div>
     );
   }
