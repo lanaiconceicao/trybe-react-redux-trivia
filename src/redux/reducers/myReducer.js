@@ -1,4 +1,10 @@
-import { SUCCESS_ACTION, FAIL_ACTION, GET_DATA, SUCCESS_QUESTIONS } from '../actions';
+import {
+  SUCCESS_ACTION,
+  FAIL_ACTION,
+  GET_DATA,
+  SUCCESS_QUESTIONS,
+  UPDATE_SCORE,
+} from '../actions';
 
 const initialState = {
   name: '',
@@ -10,6 +16,7 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
+  const { score } = state;
   switch (type) {
   case SUCCESS_ACTION:
     return { ...state, token: payload };
@@ -18,10 +25,17 @@ export default (state = initialState, { type, payload }) => {
     return { ...state, error: payload };
 
   case GET_DATA:
-    return { ...state, name: payload.name, gravatarEmail: payload.gravatarEmail };
+    return {
+      ...state,
+      name: payload.name,
+      gravatarEmail: payload.gravatarEmail,
+    };
 
   case SUCCESS_QUESTIONS:
     return { ...state, questions: payload };
+
+  case UPDATE_SCORE:
+    return { ...state, score: score + payload };
 
   default:
     return state;

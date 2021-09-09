@@ -2,6 +2,7 @@ export const SUCCESS_ACTION = 'SUCCESS_ACTION';
 export const FAIL_ACTION = 'FAIL_ACTION';
 export const GET_DATA = 'GET_DATA';
 export const SUCCESS_QUESTIONS = 'SUCCESS_QUESTIONS';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 const URL = 'https://opentdb.com/api_token.php?command=request';
 
 function successAction(json) {
@@ -12,6 +13,10 @@ function successAction(json) {
 function successQuestions(payload) {
   return { type: SUCCESS_QUESTIONS, payload };
 }
+
+export const updateScore = (payload) => (
+  { type: UPDATE_SCORE, payload }
+);
 
 export const failAction = (error) => ({
   type: FAIL_ACTION,
