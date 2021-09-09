@@ -18,6 +18,8 @@ class Questions extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.correctHandleClick = this.correctHandleClick.bind(this);
     this.setTimer = this.setTimer.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
+    this.nextButton = this.nextButton.bind(this);
   }
 
   componentDidMount() {
@@ -126,19 +128,40 @@ class Questions extends Component {
     }
   }
 
+  handleNextQuestion() {
+    this.setState((prevState) => ({
+      currentQuestion: prevState.currentQuestion + 1,
+      buttonDisabled: false,
+      timer: 30,
+    }));
+  }
+
+  nextButton() {
+    return (
+      <button
+        type="button"
+        data-testid="btn-next"
+        onClick={ this.handleNextQuestion }
+      >
+        Próxima
+      </button>
+    );
+  }
+
   render() {
     const { questions } = this.props;
-    const { timer } = this.state;
+    const { timer, buttonDisabled } = this.state;
     const question = questions[0];
     if (question !== undefined) {
       console.log(question.category);
     }
-    const { createQuestion } = this;
+    const { createQuestion, nextButton } = this;
     return (
       <div>
         <p>
           { createQuestion() }
         </p>
+        { buttonDisabled && nextButton()}
         <p>{ timer }</p>
       </div>
     );
