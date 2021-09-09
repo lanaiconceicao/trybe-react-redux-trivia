@@ -14,6 +14,7 @@ class Answers extends Component {
 
     this.createQuestion = this.createQuestion.bind(this);
     this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.setTimer = this.setTimer.bind(this);
   }
 
@@ -37,6 +38,12 @@ class Answers extends Component {
     }
   }
 
+  handleClick() {
+    this.setState({
+      buttonDisabled: true,
+    });
+  }
+
   generateIncorrectAnswers(question) {
     const { buttonDisabled } = this.state;
     return question.incorrect_answers.map((incorrectAnswer, id) => (
@@ -44,6 +51,8 @@ class Answers extends Component {
         type="button"
         key={ id }
         data-testid="wrong-answer"
+        className={ buttonDisabled && 'red-border' }
+        onClick={ this.handleClick }
         disabled={ buttonDisabled }
       >
         { incorrectAnswer }
@@ -58,20 +67,18 @@ class Answers extends Component {
       // return questions.map((item) => {
       return (
         <div key>
-          <p data-testid="question-category">{ questionSelected.category }</p>
-          <p
-            data-testid="question-text"
-          >
-            {questionSelected.question}
-          </p>
+          <p data-testid="question-category">{questionSelected.category}</p>
+          <p data-testid="question-text">{questionSelected.question}</p>
           <button
             type="button"
             data-testid="correct-answer"
+            className={ buttonDisabled && 'green-border' }
+            onClick={ this.handleClick }
             disabled={ buttonDisabled }
           >
             {questionSelected.correct_answer}
           </button>
-          { this.generateIncorrectAnswers(questionSelected) }
+          {this.generateIncorrectAnswers(questionSelected)}
         </div>
       );
     }
