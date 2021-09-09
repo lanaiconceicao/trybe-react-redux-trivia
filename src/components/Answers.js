@@ -6,36 +6,52 @@ class Answers extends Component {
   constructor() {
     super();
 
+    this.state = {
+      currentQuestion: 0,
+    };
+
     this.createQuestion = this.createQuestion.bind(this);
+    this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
+  }
+
+  generateIncorrectAnswers(question) {
+    return question.incorrect_answers.map((incorrectAnswer, id) => {
+      return (
+        <button
+          type="button"
+          key={ id }
+          data-testid="wrong-answer"
+        >
+          { incorrectAnswer }
+        </button>);
+    });
   }
 
   createQuestion() {
+    const { currentQuestion } = this.state;
     const { questions } = this.props;
-    return questions.map((item) => {
+    const questionSelected = questions[currentQuestion];
+    if (questionSelected !== undefined) {
+      // return questions.map((item) => {
       return (
-        <div key="1">
-          <p data-testid="question-category">{item.category}</p>
-          <button
+        <div key>
+          <p data-testid="question-category">{ questionSelected.category }</p>
+          <p
             type="button"
             data-testid="question-text"
           >
-            {item.question}
-          </button>
+            {questionSelected.question}
+          </p>
           <button
             type="button"
             data-testid="correct-answer"
           >
-            {item.question}
+            {questionSelected.correct_answer}
           </button>
-          <button
-            type="button"
-            data-testid="wrong-answer"
-          >
-            {item.question}
-          </button>
+          { this.generateIncorrectAnswers(questionSelected) }
         </div>
       );
-    });
+    }
   }
 
   render() {
@@ -50,6 +66,7 @@ class Answers extends Component {
         <p>
           { createQuestion() }
         </p>
+        {/* <button>Next Question</button> */}
       </div>
     );
   }
