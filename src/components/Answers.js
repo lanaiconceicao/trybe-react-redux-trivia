@@ -11,10 +11,9 @@ class Answers extends Component {
 
   createQuestion() {
     const { questions } = this.props;
-    console.log(questions);
     return questions.map((item) => {
       return (
-        <div key>
+        <div key="1">
           <p data-testid="question-category">{item.category}</p>
           <button
             type="button"
@@ -40,6 +39,11 @@ class Answers extends Component {
   }
 
   render() {
+    const { questions } = this.props;
+    const question = questions[0];
+    if (question !== undefined) {
+      console.log(question.category);
+    }
     const { createQuestion } = this;
     return (
       <div>
