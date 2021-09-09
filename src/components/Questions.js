@@ -8,45 +8,55 @@ class Answers extends Component {
 
     this.state = {
       currentQuestion: 0,
+      buttonDisabled: false,
     };
 
     this.createQuestion = this.createQuestion.bind(this);
     this.generateIncorrectAnswers = this.generateIncorrectAnswers.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({
+      buttonDisabled: true,
+    });
   }
 
   generateIncorrectAnswers(question) {
+    const { buttonDisabled } = this.state;
     return question.incorrect_answers.map((incorrectAnswer, id) => (
       <button
         type="button"
         key={ id }
         data-testid="wrong-answer"
+        className={ buttonDisabled && 'red-border' }
+        onClick={ this.handleClick }
+        disabled={ buttonDisabled }
       >
         { incorrectAnswer }
       </button>));
   }
 
   createQuestion() {
-    const { currentQuestion } = this.state;
+    const { currentQuestion, buttonDisabled } = this.state;
     const { questions } = this.props;
     const questionSelected = questions[currentQuestion];
     if (questionSelected !== undefined) {
       // return questions.map((item) => {
       return (
         <div key>
-          <p data-testid="question-category">{ questionSelected.category }</p>
-          <p
-            type="button"
-            data-testid="question-text"
-          >
-            {questionSelected.question}
-          </p>
+          <p data-testid="question-category">{questionSelected.category}</p>
+          <p data-testid="question-text">{questionSelected.question}</p>
           <button
             type="button"
             data-testid="correct-answer"
+            className={ buttonDisabled && 'green-border' }
+            onClick={ this.handleClick }
+            disabled={ buttonDisabled }
           >
             {questionSelected.correct_answer}
           </button>
-          { this.generateIncorrectAnswers(questionSelected) }
+          {this.generateIncorrectAnswers(questionSelected)}
         </div>
       );
     }
