@@ -74,4 +74,3 @@ const mapStateToProps = ({ player: { score, assertions } }) => ({
 });
 
 export default connect(mapStateToProps)(Feedback);
-
