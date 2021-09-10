@@ -37,7 +37,7 @@ export class Feedback extends Component {
         <p>
           Você acertou
           {' '}
-          <span data-testid="feedback-total-questions">
+          <span data-testid="feedback-total-question">
             { assertions }
           </span>
           {' '}

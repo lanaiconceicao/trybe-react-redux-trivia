@@ -12,6 +12,7 @@ class Questions extends Component {
       currentQuestion: 0,
       timer: 30,
       buttonDisabled: false,
+      assertionsLocal: 0,
     };
 
     this.createQuestion = this.createQuestion.bind(this);
@@ -27,7 +28,7 @@ class Questions extends Component {
     const SECONDS = 1000;
     this.interval = setInterval(this.setTimer, SECONDS);
 
-    const state = { player: { score: 0 } };
+    const state = { player: { score: 0, assertions: 0 } };
     localStorage.setItem('state', JSON.stringify(state));
   }
 
@@ -53,14 +54,13 @@ class Questions extends Component {
   }
 
   correctHandleClick(e) {
-    const { timer } = this.state;
+    const { timer, assertionsLocal } = this.state;
     const difficulty = e.target.getAttribute('difficulty');
     const HARD = 3;
     const MEDIUM = 2;
     const EASY = 1;
     const minScore = 10;
     let multiplier;
-    let questionScore = 0;
 
     switch (difficulty) {
     case 'hard':
@@ -76,10 +76,18 @@ class Questions extends Component {
       break;
     }
 
-    questionScore = minScore + (multiplier * timer);
+    const questionScore = minScore + (multiplier * timer);
     const { dispatchScore, score: scoreFromState } = this.props;
     dispatchScore(questionScore);
-    const state = { player: { score: scoreFromState + questionScore } };
+    this.setState((prevState) => ({
+      assertionsLocal: prevState.assertionsLocal + 1,
+    }));
+    const state = {
+      player: {
+        score: scoreFromState + questionScore,
+        assertions: assertionsLocal + 1,
+      },
+    };
     localStorage.setItem('state', JSON.stringify(state));
     this.handleClick();
   }
