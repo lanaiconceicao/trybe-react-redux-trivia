@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
-  const { score } = state;
+  const { score, assertions } = state;
   switch (type) {
   case SUCCESS_ACTION:
     return { ...state, token: payload };
@@ -35,7 +35,10 @@ export default (state = initialState, { type, payload }) => {
     return { ...state, questions: payload };
 
   case UPDATE_SCORE:
-    return { ...state, score: score + payload };
+    return { ...state,
+      score: score + payload,
+      assertions: assertions + 1,
+    };
 
   default:
     return state;
