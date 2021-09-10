@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { updateScore } from '../redux/actions';
 
 class Questions extends Component {
@@ -76,11 +77,8 @@ class Questions extends Component {
     }
 
     questionScore = minScore + (multiplier * timer);
-
     const { dispatchScore, score: scoreFromState } = this.props;
-
     dispatchScore(questionScore);
-
     const state = { player: { score: scoreFromState + questionScore } };
     localStorage.setItem('state', JSON.stringify(state));
     this.handleClick();
@@ -107,7 +105,6 @@ class Questions extends Component {
     const { questions } = this.props;
     const questionSelected = questions[currentQuestion];
     if (questionSelected !== undefined) {
-      // return questions.map((item) => {
       return (
         <div key>
           <p data-testid="question-category">{questionSelected.category}</p>
@@ -129,11 +126,17 @@ class Questions extends Component {
   }
 
   handleNextQuestion() {
+    const QUESTIONS_FOUR = 4;
+    const { history } = this.props;
+    const { currentQuestion } = this.state;
     this.setState((prevState) => ({
       currentQuestion: prevState.currentQuestion + 1,
       buttonDisabled: false,
       timer: 30,
     }));
+    if (currentQuestion === QUESTIONS_FOUR) {
+      history.push('/feedback');
+    }
   }
 
   nextButton() {
@@ -172,6 +175,7 @@ Questions.propTypes = {
   dispatchScore: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object),
   score: PropTypes.number.isRequired,
+  history: PropTypes.string.isRequired,
 };
 
 Questions.defaultProps = {
@@ -190,4 +194,4 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchScore: (score) => dispatch(updateScore(score)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Questions));

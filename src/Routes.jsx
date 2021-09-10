@@ -1,9 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import {
+  Feedback,
   Game,
   Login,
   Settings,
+  Ranking,
 } from './pages';
 
 const Routes = () => (
@@ -22,6 +24,16 @@ const Routes = () => (
       exact
       path="/game"
       component={ Game }
+    />
+    <Route
+      exact
+      path="/feedback"
+      component={ Feedback }
+    />
+    <Route
+      exact
+      path="/ranking"
+      component={ Ranking }
     />
   </Switch>
 );
